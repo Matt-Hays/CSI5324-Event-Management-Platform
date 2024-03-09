@@ -69,6 +69,16 @@ public class LocationService {
     }
 
     /**
+     * Get location by identifier containing.
+     *
+     * @param locationIdentifier The location identifier to search by. Case-insensitive.
+     * @return The Iterable&lt;Location&gt; locations found containing the given identifier.
+     */
+    public Iterable<Location> getLocationByIdentifier(String locationIdentifier) {
+        return locationRepository.getLocationsByIdentifierContainingIgnoreCase(locationIdentifier);
+    }
+
+    /**
      * Post an updated location. POST method replaces all existing data.
      *
      * @param l The location to post.
