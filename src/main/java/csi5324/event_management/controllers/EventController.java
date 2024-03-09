@@ -28,7 +28,7 @@ public class EventController {
     @GetMapping(consumes = "application/json")
     public ResponseEntity<Event> getEvent(Event event) {
         try {
-            return new ResponseEntity<>(eventService.getEvent(event), HttpStatus.OK);
+            return ResponseEntity.ok(eventService.getEvent(event));
         } catch (EntityNotFoundException ex) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
