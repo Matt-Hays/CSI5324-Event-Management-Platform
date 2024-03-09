@@ -1,7 +1,7 @@
 package csi5324.event_management.services;
 
 import csi5324.event_management.domain.Location;
-import csi5324.event_management.domain.repositories.LocationRepository;
+import csi5324.event_management.repositories.LocationRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

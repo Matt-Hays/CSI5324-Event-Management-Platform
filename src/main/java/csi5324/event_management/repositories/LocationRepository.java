@@ -1,4 +1,4 @@
-package csi5324.event_management.domain.repositories;
+package csi5324.event_management.repositories;
 
 import csi5324.event_management.domain.Location;
 import org.springframework.data.repository.CrudRepository;
