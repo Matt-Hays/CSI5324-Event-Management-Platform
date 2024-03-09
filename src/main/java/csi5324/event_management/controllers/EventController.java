@@ -10,7 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/api/events", produces = "application/json")
+@RequestMapping(path = "/api/events", produces = "application/json")
 @RequiredArgsConstructor
 public class EventController {
     private final EventService eventService;
