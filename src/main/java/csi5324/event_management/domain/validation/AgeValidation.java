@@ -1,4 +1,4 @@
-package domain.validation;
+package csi5324.event_management.domain.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

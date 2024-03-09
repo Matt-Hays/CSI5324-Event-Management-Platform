@@ -1,6 +1,6 @@
-package domain.validation;
+package csi5324.event_management.domain.validation;
 
-import domain.Event;
+import csi5324.event_management.domain.Event;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

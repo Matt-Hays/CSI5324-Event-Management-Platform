@@ -1,6 +1,6 @@
-package domain;
+package csi5324.event_management.domain;
 
-import domain.validation.AgeValidation;
+import csi5324.event_management.domain.validation.AgeValidation;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
