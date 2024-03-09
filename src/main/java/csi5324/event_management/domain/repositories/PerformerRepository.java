@@ -8,4 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface PerformerRepository extends CrudRepository<Performer, UUID> {
+    Iterable<Performer> getPerformersByNameContainingIgnoreCase(String nameContaining);
 }
