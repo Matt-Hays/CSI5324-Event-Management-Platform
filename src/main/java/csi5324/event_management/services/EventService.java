@@ -1,9 +1,11 @@
 package csi5324.event_management.services;
 
+import csi5324.event_management.controllers.EventController;
 import csi5324.event_management.domain.Event;
 import csi5324.event_management.repositories.EventRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -97,9 +99,9 @@ public class EventService {
      * @param e The event to PATCH.
      * @return The patched and persisted event.
      */
-    public Event patchEvent(Event e) {
+    public Event patchEvent(Event e) throws BadRequestException {
+        if (e.getId() == null) throw new BadRequestException();
         Event patched = new Event();
-        if (e.getId() == null) return null;
         patched.setId(e.getId());
         if (e.getName() != null && !e.getName().isBlank()) patched.setName(e.getName());
         if (e.getDateHeld() != null && !e.getDateHeld().isBefore(LocalDate.now())) patched.setDateHeld(e.getDateHeld());

@@ -1,9 +1,11 @@
 package csi5324.event_management.services;
 
+import csi5324.event_management.controllers.PerformerController;
 import csi5324.event_management.domain.Performer;
 import csi5324.event_management.repositories.PerformerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
@@ -94,8 +96,8 @@ public class PerformerService {
      * @param p The performer to patch.
      * @return The patched performer.
      */
-    public Performer patchPerformer(Performer p) {
-        if (p.getId() == null) return null;
+    public Performer patchPerformer(Performer p) throws BadRequestException {
+        if (p.getId() == null) throw new BadRequestException();
         Performer patched = new Performer();
         patched.setId(p.getId());
         if (p.getName() != null && !p.getName().isBlank()) patched.setName(p.getName());
