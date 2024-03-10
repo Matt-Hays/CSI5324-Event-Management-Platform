@@ -1,9 +1,11 @@
 package csi5324.event_management.services;
 
+import csi5324.event_management.controllers.LocationController;
 import csi5324.event_management.domain.Location;
 import csi5324.event_management.repositories.LocationRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
@@ -94,8 +96,8 @@ public class LocationService {
      * @param l The location to patch.
      * @return The patched location.
      */
-    public Location patchLocation(Location l) {
-        if (l.getId() == null) return null;
+    public Location patchLocation(Location l) throws BadRequestException {
+        if (l.getId() == null) throw new BadRequestException();
         Location patched = new Location();
         patched.setId(l.getId());
         if (l.getName() != null && !l.getName().isBlank()) patched.setName(l.getName());

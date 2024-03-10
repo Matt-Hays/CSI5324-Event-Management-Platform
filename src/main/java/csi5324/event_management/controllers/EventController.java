@@ -5,6 +5,7 @@ import csi5324.event_management.repositories.EventRepository;
 import csi5324.event_management.services.EventService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -107,8 +108,12 @@ public class EventController {
      * @return The updated event.
      */
     @PatchMapping(consumes = "application/json")
-    public Event patchEvent(Event event) {
-        return eventService.patchEvent(event);
+    public ResponseEntity<Event> patchEvent(Event event) {
+        try {
+            return ResponseEntity.ok(eventService.patchEvent(event));
+        } catch (BadRequestException ex) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**
