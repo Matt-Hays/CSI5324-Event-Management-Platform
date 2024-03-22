@@ -19,29 +19,29 @@ public class EventManagementApplication {
         SpringApplication.run(EventManagementApplication.class, args);
     }
 
-    @Bean
-    public CommandLineRunner dataLoader(EventRepository repo, LocationRepository locRepo) {
-        return args -> {
-            Event e = new Event();
-            e.setName("Test Event");
-            e.setDateHeld(LocalDate.of(2020, 1, 1));
-            e.setDateRegistrationBegins(LocalDate.of(2019, 11, 1));
-            e.setDescription("Test Event");
-            e.setStartTime(LocalDateTime.now());
-            e.setEndTime(LocalDateTime.now());
-            e.setCapacity(20L);
-            e.setAgeRestricted(false);
-            e.setMinimumAge(0);
-
-            repo.save(e);
-
-            Location l = new Location();
-            l.setName("Location Test");
-            l.setIdentifier("L.11");
-            l.setDescription("Location Tester");
-
-            locRepo.save(l);
-        };
-    }
+//    @Bean
+//    public CommandLineRunner dataLoader(EventRepository repo, LocationRepository locRepo) {
+//        return args -> {
+//            Event e = new Event();
+//            e.setName("Test Event");
+//            e.setDateHeld(LocalDate.of(2020, 1, 1));
+//            e.setDateRegistrationBegins(LocalDate.of(2019, 11, 1));
+//            e.setDescription("Test Event");
+//            e.setStartTime(LocalDateTime.now());
+//            e.setEndTime(LocalDateTime.now());
+//            e.setCapacity(20L);
+//            e.setAgeRestricted(false);
+//            e.setMinimumAge(0);
+//
+//            repo.save(e);
+//
+//            Location l = new Location();
+//            l.setName("Location Test");
+//            l.setIdentifier("L.11");
+//            l.setDescription("Location Tester");
+//
+//            locRepo.save(l);
+//        };
+//    }
 
 }

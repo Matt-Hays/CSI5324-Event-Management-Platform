@@ -1,17 +1,23 @@
 package csi5324.event_management.controllers;
 
+import csi5324.event_management.domain.Event;
+import csi5324.event_management.services.EventService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.when;
 
 /**
  * Integration tests that utilize the Test Context framework as well as the Spring MVC test framework.
@@ -24,12 +30,30 @@ import static org.hamcrest.Matchers.is;
  * {@literal @AutoConfigureMockMvc} is an annotation from the Spring MVC Test framework which allows us to perform requests against
  * our controllers in a simulated environment without the need to start a full HTTP server.
  */
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-@AutoConfigureMockMvc
+@WebMvcTest(controllers = EventController.class)
 public class EventControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @MockBean
+    private EventService eventService;
+
+    Event mockedEvent;
+
+    @BeforeEach
+    public void setup() {
+        mockedEvent = new Event();
+        mockedEvent.setName("Test Event");
+        mockedEvent.setDateHeld(LocalDate.parse("2024-01-01"));
+        mockedEvent.setDateRegistrationBegins(LocalDate.parse("2023-11-01"));
+        mockedEvent.setDescription("Test Description");
+        mockedEvent.setCapacity(50L);
+        mockedEvent.setStartTime(LocalDateTime.parse("2024-01-01T09:00:00"));
+        mockedEvent.setEndTime(LocalDateTime.parse("2024-01-01T18:00:00"));
+        mockedEvent.setAgeRestricted(true);
+        mockedEvent.setMinimumAge(18);
+    }
 
     @Test
     public void postEvent_Success() throws Exception {
@@ -44,6 +68,9 @@ public class EventControllerTests {
                 "\"ageRestricted\": true," +
                 "\"minimumAge\": 18" +
                 "}";
+
+        when(eventService.createEvent(any(Event.class))).thenReturn(mockedEvent);
+
 
         mockMvc.perform(post("/api/events")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -66,6 +93,8 @@ public class EventControllerTests {
                 "\"ageRestricted\": true," +
                 "\"minimumAge\": 18" +
                 "}";
+        mockedEvent.setStartTime(null);
+        when(eventService.createEvent(mockedEvent)).thenThrow();
 
         mockMvc.perform(post("/api/events")
                         .contentType(MediaType.APPLICATION_JSON)
