@@ -1,11 +1,12 @@
-package csi5324.event_management.testcontext;
+package csi5324.event_management.controllers;
 
-import csi5324.event_management.repositories.EventRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -25,7 +26,7 @@ import static org.hamcrest.Matchers.is;
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
-public class SpringBootTestContextTests {
+public class EventControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
@@ -72,4 +73,6 @@ public class SpringBootTestContextTests {
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string(""));
     }
+
+
 }

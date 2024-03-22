@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -25,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping(path = "/api/events", produces = "application/json")
+@CrossOrigin("http://localhost:8080")
 @RequiredArgsConstructor
 public class EventController {
     private final EventService eventService;
@@ -36,8 +36,12 @@ public class EventController {
      * @return The persisted event.
      */
     @PostMapping(consumes = "application/json")
-    public Event createEvent(@Validated Event event) {
-        return eventService.createEvent(event);
+    public ResponseEntity<Event> createEvent(@RequestBody Event event) {
+        try {
+            return ResponseEntity.ok(eventService.createEvent(event));
+        } catch (Exception ex) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**
@@ -47,7 +51,7 @@ public class EventController {
      * @return The Iterable&lt;Event&gt; events persisted.
      */
     @PostMapping(params = "batch", consumes = "application/json")
-    public Iterable<Event> createEventsBatch(@Validated Iterable<Event> events) {
+    public Iterable<Event> createEventsBatch(@RequestBody Iterable<Event> events) {
         return eventService.createEventBatch(events);
     }
 
@@ -58,7 +62,7 @@ public class EventController {
      * @return The found event or null if no event is found by the given id.
      */
     @GetMapping(consumes = "application/json")
-    public ResponseEntity<Event> getEvent(Event event) {
+    public ResponseEntity<Event> getEvent(@RequestBody Event event) {
         try {
             return ResponseEntity.ok(eventService.getEvent(event));
         } catch (EntityNotFoundException ex) {
@@ -74,7 +78,7 @@ public class EventController {
      * @return An Iterable&lt;Event&gt; events found. The Iterable will be empty if no events are found.
      */
     @GetMapping(params = "batch", consumes = "application/json")
-    public Iterable<Event> getEvents(Iterable<Event> events) {
+    public Iterable<Event> getEvents(@RequestBody Iterable<Event> events) {
         return eventService.getEvents(events);
     }
 
@@ -97,7 +101,7 @@ public class EventController {
      * @return The updated event.
      */
     @PostMapping(params = "post", consumes = "application/json")
-    public Event postEvent(@Validated Event event) {
+    public Event postEvent(@RequestBody Event event) {
         return eventService.postEvent(event);
     }
 
@@ -108,7 +112,7 @@ public class EventController {
      * @return The updated event.
      */
     @PatchMapping(consumes = "application/json")
-    public ResponseEntity<Event> patchEvent(Event event) {
+    public ResponseEntity<Event> patchEvent(@RequestBody Event event) {
         try {
             return ResponseEntity.ok(eventService.patchEvent(event));
         } catch (BadRequestException ex) {
@@ -122,7 +126,7 @@ public class EventController {
      * @param event The event to delete
      */
     @DeleteMapping(consumes = "application/json")
-    public void deleteEvent(Event event) {
+    public void deleteEvent(@RequestBody Event event) {
         eventService.deleteEvent(event);
     }
 
@@ -132,7 +136,7 @@ public class EventController {
      * @param events The Iterable&lt;Event&gt; events to be deleted.
      */
     @DeleteMapping(params = "batch", consumes = "application/json")
-    public void deleteEventsBatch(Iterable<Event> events) {
+    public void deleteEventsBatch(@RequestBody Iterable<Event> events) {
         eventService.deleteEventBatch(events);
     }
 }

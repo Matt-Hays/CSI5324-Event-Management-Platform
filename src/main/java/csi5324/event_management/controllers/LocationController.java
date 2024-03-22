@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping(path = "/api/locations", produces = "application/json", consumes = "application/json")
+@CrossOrigin("http://localhost:8080")
 @RequiredArgsConstructor
 public class LocationController {
     private final LocationService locationService;
@@ -33,7 +34,7 @@ public class LocationController {
      * @return The created and persisted location.
      */
     @PostMapping
-    public Location createLocation(@Valid @RequestBody Location location) {
+    public Location createLocation(@RequestBody Location location) {
         return locationService.createLocation(location);
     }
 
@@ -44,7 +45,7 @@ public class LocationController {
      * @return The Iterable&lt;Location&gt; locations created and persisted.
      */
     @PostMapping(params = "batch")
-    public Iterable<Location> createLocationsBatch(@Valid @RequestBody Iterable<Location> locations) {
+    public Iterable<Location> createLocationsBatch(@RequestBody Iterable<Location> locations) {
         return locationService.createLocationsBatch(locations);
     }
 
@@ -92,7 +93,7 @@ public class LocationController {
      * @return The updated location.
      */
     @PostMapping(params = "update")
-    public Location postLocation(@Valid @RequestBody Location location) {
+    public Location postLocation(@RequestBody Location location) {
         return locationService.postLocation(location);
     }
 
