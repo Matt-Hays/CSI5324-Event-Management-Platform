@@ -1,14 +1,11 @@
 package csi5324.event_management.domain;
 
-import csi5324.event_management.domain.validation.AgeValidation;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,8 +21,8 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Version
-    private Long version;
+//    @Version
+//    private Long version;
 
     @NotBlank
     @Column(nullable = false)

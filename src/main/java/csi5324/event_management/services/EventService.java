@@ -101,7 +101,7 @@ public class EventService {
      */
     public Event patchEvent(Event e) throws BadRequestException {
         if (e.getId() == null) throw new BadRequestException();
-        Event patched = new Event();
+        Event patched = eventRepository.findById(e.getId()).orElseThrow();
         patched.setId(e.getId());
         if (e.getName() != null && !e.getName().isBlank()) patched.setName(e.getName());
         if (e.getDateHeld() != null && !e.getDateHeld().isBefore(LocalDate.now())) patched.setDateHeld(e.getDateHeld());

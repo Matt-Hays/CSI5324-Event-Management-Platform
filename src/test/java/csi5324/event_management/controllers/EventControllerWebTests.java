@@ -1,17 +1,28 @@
 package csi5324.event_management.controllers;
 
+import csi5324.event_management.domain.Event;
+import csi5324.event_management.repositories.EventRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@SpringBootTest
 public class EventControllerWebTests {
     private final WebTestClient webTestClient = WebTestClient.bindToServer()
             .baseUrl("http://localhost:8080")
             .build();
 
-    @Test
-    public void postEvent_Success_WebClientTest() {
-        String eventJson = "{" +
+    String eventJson;
+
+    @BeforeEach
+    public void setup() {
+        eventJson = "{" +
                 "\"name\": \"Test Event\"," +
                 "\"dateHeld\": \"2024-01-01\"," +
                 "\"dateRegistrationBegins\": \"2023-11-01\"," +
@@ -22,7 +33,10 @@ public class EventControllerWebTests {
                 "\"ageRestricted\": true," +
                 "\"minimumAge\": 18" +
                 "}";
+    }
 
+    @Test
+    public void postEvent_Success_WebClientTest() {
         webTestClient.post()
                 .uri("/api/events")
                 .contentType(MediaType.APPLICATION_JSON)

@@ -32,7 +32,6 @@ public class EventTests {
         Event saved = eventRepository.save(e);
 
         assertNotNull(saved.getId());
-        assertNotNull(saved.getVersion());
         assertEquals(saved.getName(), "Test Event");
         assertEquals(LocalDate.of(2020, 1, 1), saved.getDateHeld());
         assertEquals(LocalDate.of(2019, 11, 1), saved.getDateRegistrationBegins());

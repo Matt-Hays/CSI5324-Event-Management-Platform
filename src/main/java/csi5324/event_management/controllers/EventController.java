@@ -114,6 +114,7 @@ public class EventController {
     @PatchMapping(consumes = "application/json")
     public ResponseEntity<Event> patchEvent(@RequestBody Event event) {
         try {
+            System.out.println("Hello: " + event);
             return ResponseEntity.ok(eventService.patchEvent(event));
         } catch (BadRequestException ex) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
