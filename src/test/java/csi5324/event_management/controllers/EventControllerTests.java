@@ -102,6 +102,4 @@ public class EventControllerTests {
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string(""));
     }
-
-
 }
