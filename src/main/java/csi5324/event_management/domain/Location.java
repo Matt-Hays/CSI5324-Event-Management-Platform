@@ -20,9 +20,6 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Version
-    private Long version;
-
     @NotBlank
     @Column(nullable = false)
     private String name;

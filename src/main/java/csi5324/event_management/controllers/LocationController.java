@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 /**
  * Location REST Controller. Provides basic CRUD functionality for the Location domain.
  *
@@ -21,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 0.0.1
  */
 @RestController
-@RequestMapping(path = "/api/locations", produces = "application/json", consumes = "application/json")
+@RequestMapping(path = "/api/locations", produces = "application/json")
 @CrossOrigin("http://localhost:8080")
 @RequiredArgsConstructor
 public class LocationController {
@@ -55,13 +57,20 @@ public class LocationController {
      * @param location The location to get. Must contain a valid id.
      * @return The found location.
      */
-    @GetMapping
-    public ResponseEntity<Location> getLocation(@RequestBody Location location) {
+    @GetMapping(params = "id")
+    public ResponseEntity<Location> getLocation(@RequestParam(name = "id") UUID id) {
         try {
-            return ResponseEntity.ok(locationService.getLocation(location));
+            return ResponseEntity.ok(locationService.getLocation(id));
         } catch (EntityNotFoundException ex) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping
+    public Iterable<Location> getAllLocations() {
+        Iterable<Location> ls = locationService.getAllLocations();
+        System.out.println(ls);
+        return ls;
     }
 
     /**

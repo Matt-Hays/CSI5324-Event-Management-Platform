@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -52,8 +53,12 @@ public class LocationService {
      * @return The found location.
      * @throws EntityNotFoundException If no location is found with the given id.
      */
-    public Location getLocation(Location l) throws EntityNotFoundException {
-        return locationRepository.findById(l.getId()).orElseThrow(EntityNotFoundException::new);
+    public Location getLocation(UUID id) throws EntityNotFoundException {
+        return locationRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    public Iterable<Location> getAllLocations() {
+        return locationRepository.findAll();
     }
 
     /**

@@ -9,6 +9,7 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -53,10 +54,14 @@ public class EventService {
      * @return Event The found event.
      * @throws EntityNotFoundException If no event is found by the given id.
      */
-    public Event getEvent(Event e) throws EntityNotFoundException {
+    public Event getEvent(UUID id) throws EntityNotFoundException {
         return eventRepository
-                .findById(e.getId())
+                .findById(id)
                 .orElseThrow(EntityNotFoundException::new);
+    }
+
+    public Iterable<Event> getAllEvents() {
+        return eventRepository.findAll();
     }
 
     /**

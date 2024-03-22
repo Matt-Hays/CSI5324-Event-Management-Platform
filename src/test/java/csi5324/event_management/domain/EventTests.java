@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -25,6 +26,8 @@ public class EventTests {
         e.setDateHeld(LocalDate.of(2020, 1, 1));
         e.setDateRegistrationBegins(LocalDate.of(2019, 11, 1));
         e.setDescription("Test Event");
+        e.setStartTime(LocalDateTime.now());
+        e.setEndTime(LocalDateTime.now());
         e.setCapacity(20L);
         e.setAgeRestricted(false);
         e.setMinimumAge(0);

@@ -12,7 +12,6 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@SpringBootTest
 public class EventControllerWebTests {
     private final WebTestClient webTestClient = WebTestClient.bindToServer()
             .baseUrl("http://localhost:8080")
@@ -46,5 +45,15 @@ public class EventControllerWebTests {
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
                 .expectBody()
                 .jsonPath("$.name").isEqualTo("Test Event");
+    }
+
+    @Test
+    public void getEvents_Success_WebTestClient() {
+        webTestClient.get()
+                .uri("/api/events")
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody().jsonPath("$[0].name").isEqualTo("Test Event");
     }
 }

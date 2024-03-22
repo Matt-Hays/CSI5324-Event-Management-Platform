@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 /**
  * REST controller for the event domain. Provides basic CRUD functionality.<br/>
  * Endpoint: /api/events <br/>
@@ -61,13 +63,18 @@ public class EventController {
      * @param event The event to find. Must contain a valid id.
      * @return The found event or null if no event is found by the given id.
      */
-    @GetMapping(consumes = "application/json")
-    public ResponseEntity<Event> getEvent(@RequestBody Event event) {
+    @GetMapping(params = "id", consumes = "application/json")
+    public ResponseEntity<Event> getEvent(@RequestParam(name = "id") UUID id) {
         try {
-            return ResponseEntity.ok(eventService.getEvent(event));
+            return ResponseEntity.ok(eventService.getEvent(id));
         } catch (EntityNotFoundException ex) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping
+    public Iterable<Event> getAllEvents() {
+        return eventService.getAllEvents();
     }
 
     /**
