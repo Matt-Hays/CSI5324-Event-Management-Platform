@@ -28,12 +28,6 @@ public class Performer {
     @Version
     private Long version;
 
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    private LocalDateTime lastModifiedAt;
-
     @NotBlank
     @Column(nullable = false)
     private String name;

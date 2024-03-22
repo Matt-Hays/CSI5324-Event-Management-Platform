@@ -19,7 +19,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@AgeValidation(message = "Minimum age must be 18 or above is age restricted is set.")
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -27,12 +26,6 @@ public class Event {
 
     @Version
     private Long version;
-
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    private LocalDateTime lastModifiedAt;
 
     @NotBlank
     @Column(nullable = false)
@@ -75,12 +68,8 @@ public class Event {
     private Integer minimumAge = 0;
 
     @ManyToOne
-    @NotNull
-    @Column(nullable = false)
     private Location location;
 
     @ManyToOne
-    @NotNull
-    @Column(nullable = false)
     private Performer performer;
 }

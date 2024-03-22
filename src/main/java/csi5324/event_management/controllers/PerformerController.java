@@ -12,17 +12,18 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api/performers", produces = "application/json", consumes = "application/json")
+@CrossOrigin("http://localhost:8080")
 @RequiredArgsConstructor
 public class PerformerController {
     private final PerformerService performerService;
 
     @PostMapping
-    public Performer createPerformer(@Valid @RequestBody Performer performer) {
+    public Performer createPerformer(@RequestBody Performer performer) {
         return performerService.createPerformer(performer);
     }
 
     @PostMapping(params = "batch")
-    public Iterable<Performer> createPerformersBatch(@Valid @RequestBody Iterable<Performer> performers) {
+    public Iterable<Performer> createPerformersBatch(@RequestBody Iterable<Performer> performers) {
         return performerService.createPerformersBatch(performers);
     }
 
@@ -46,7 +47,7 @@ public class PerformerController {
     }
 
     @PostMapping(params = "update")
-    public Performer postPerformer(@Valid @RequestBody Performer performer) {
+    public Performer postPerformer(@RequestBody Performer performer) {
         return performerService.postPerformer(performer);
     }
 
