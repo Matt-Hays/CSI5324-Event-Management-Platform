@@ -28,6 +28,19 @@ public class EventServiceTest {
 
     private Event event;
 
+    @Test
+    void createEvent_Success() {
+        when(eventRepository.save(any(Event.class))).thenReturn(event);
+
+        Event createdEvent = eventService.createEvent(event);
+
+        assertNotNull(createdEvent, "The created event should not be null.");
+        assertEquals("Test Event", createdEvent.getName(), "The event name should match the input.");
+        assertEquals("This is a test event.", createdEvent.getDescription(), "The event description should match the input.");
+        assertEquals(100L, createdEvent.getCapacity(), "The event capacity should match the input.");
+        assertFalse(createdEvent.getAgeRestricted(), "The event should not be age restricted.");
+    }
+
     @BeforeEach
     void setUp() {
         event = Event.builder()
@@ -40,18 +53,5 @@ public class EventServiceTest {
                 .capacity(100L)
                 .ageRestricted(false)
                 .build();
-    }
-
-    @Test
-    void createEvent_Success() {
-        when(eventRepository.save(any(Event.class))).thenReturn(event);
-
-        Event createdEvent = eventService.createEvent(event);
-
-        assertNotNull(createdEvent, "The created event should not be null.");
-        assertEquals("Test Event", createdEvent.getName(), "The event name should match the input.");
-        assertEquals("This is a test event.", createdEvent.getDescription(), "The event description should match the input.");
-        assertEquals(100L, createdEvent.getCapacity(), "The event capacity should match the input.");
-        assertFalse(createdEvent.getAgeRestricted(), "The event should not be age restricted.");
     }
 }

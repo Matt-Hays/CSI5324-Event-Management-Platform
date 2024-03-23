@@ -20,15 +20,11 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 
 /**
- * Integration tests that utilize the Test Context framework as well as the Spring MVC test framework.
+ * The {@literal @WebMvcTest} annotation loads the Web layer of the Spring context as a subset of the Spring context and is used for
+ * performing web layer testing.
  * <p>
- * Performs testing of controllers against a mock servlet.
- * <p>
- * {@literal @SpringBootTest} is an annotation from the Test Context framework which bootstraps the entire application context and
- * loads the application configuration.
- * <p>
- * {@literal @AutoConfigureMockMvc} is an annotation from the Spring MVC Test framework which allows us to perform requests against
- * our controllers in a simulated environment without the need to start a full HTTP server.
+ * The {@literal @MockBean} annotation is used to mock dependencies of the tested controller (in this case, EventService) to isolate the
+ * controller and perform unit testing. Mocked responses must be provided for the mocked bean so that testing can occur.
  */
 @WebMvcTest(controllers = EventController.class)
 public class EventControllerTests {
@@ -40,20 +36,6 @@ public class EventControllerTests {
     private EventService eventService;
 
     Event mockedEvent;
-
-    @BeforeEach
-    public void setup() {
-        mockedEvent = new Event();
-        mockedEvent.setName("Test Event");
-        mockedEvent.setDateHeld(LocalDate.parse("2024-01-01"));
-        mockedEvent.setDateRegistrationBegins(LocalDate.parse("2023-11-01"));
-        mockedEvent.setDescription("Test Description");
-        mockedEvent.setCapacity(50L);
-        mockedEvent.setStartTime(LocalDateTime.parse("2024-01-01T09:00:00"));
-        mockedEvent.setEndTime(LocalDateTime.parse("2024-01-01T18:00:00"));
-        mockedEvent.setAgeRestricted(true);
-        mockedEvent.setMinimumAge(18);
-    }
 
     @Test
     public void postEvent_Success() throws Exception {
@@ -101,5 +83,19 @@ public class EventControllerTests {
                         .content(eventJson))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string(""));
+    }
+
+    @BeforeEach
+    public void setup() {
+        mockedEvent = new Event();
+        mockedEvent.setName("Test Event");
+        mockedEvent.setDateHeld(LocalDate.parse("2024-01-01"));
+        mockedEvent.setDateRegistrationBegins(LocalDate.parse("2023-11-01"));
+        mockedEvent.setDescription("Test Description");
+        mockedEvent.setCapacity(50L);
+        mockedEvent.setStartTime(LocalDateTime.parse("2024-01-01T09:00:00"));
+        mockedEvent.setEndTime(LocalDateTime.parse("2024-01-01T18:00:00"));
+        mockedEvent.setAgeRestricted(true);
+        mockedEvent.setMinimumAge(18);
     }
 }

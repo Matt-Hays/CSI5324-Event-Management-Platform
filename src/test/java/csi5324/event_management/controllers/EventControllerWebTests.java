@@ -19,21 +19,6 @@ public class EventControllerWebTests {
 
     String eventJson;
 
-    @BeforeEach
-    public void setup() {
-        eventJson = "{" +
-                "\"name\": \"Test Event\"," +
-                "\"dateHeld\": \"2024-01-01\"," +
-                "\"dateRegistrationBegins\": \"2023-11-01\"," +
-                "\"description\": \"Test Description\"," +
-                "\"capacity\": 50," +
-                "\"startTime\": \"2024-01-01T09:00:00\"," +
-                "\"endTime\": \"2024-01-01T18:00:00\"," +
-                "\"ageRestricted\": true," +
-                "\"minimumAge\": 18" +
-                "}";
-    }
-
     @Test
     public void postEvent_Success_WebClientTest() {
         webTestClient.post()
@@ -55,5 +40,20 @@ public class EventControllerWebTests {
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
                 .expectBody().jsonPath("$[0].name").isEqualTo("Test Event");
+    }
+
+    @BeforeEach
+    public void setup() {
+        eventJson = "{" +
+                "\"name\": \"Test Event\"," +
+                "\"dateHeld\": \"2024-01-01\"," +
+                "\"dateRegistrationBegins\": \"2023-11-01\"," +
+                "\"description\": \"Test Description\"," +
+                "\"capacity\": 50," +
+                "\"startTime\": \"2024-01-01T09:00:00\"," +
+                "\"endTime\": \"2024-01-01T18:00:00\"," +
+                "\"ageRestricted\": true," +
+                "\"minimumAge\": 18" +
+                "}";
     }
 }
